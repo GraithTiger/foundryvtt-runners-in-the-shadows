@@ -1,3 +1,14 @@
+------------------------------------
+| Runners in the Shadows Changelog |
+------------------------------------
+
+v.4.8.0
+- Initial port to Runners in the Shadows
+
+--------------------------------
+| Blades in the Dark Changelog |
+--------------------------------
+
 v.4.8
 - Fix CSS namespace collisions #202 (@drewg13)
 - Adds Automatic generated version in system.json
