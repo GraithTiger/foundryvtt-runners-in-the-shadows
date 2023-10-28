@@ -11,7 +11,7 @@
   "minimumCoreVersion": "10",
   "url": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows",
   "manifest": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows/master/system.json",
-  "download": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows/releases/download/4.8.0/runners-in-the-shadows-4.8.0.zip",
+  "download": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows/archive/refs/tags/4.8.0-test.1.zip",
   "authors": [
     { "name": "megastruktur" },
     { "name": "drewg13" },
