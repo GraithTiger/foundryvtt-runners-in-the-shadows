@@ -66,23 +66,23 @@
           "exp_max": 6,
           "label": "BITD.SkillsInsight",
           "skills": {
+            "tinker": {
+              "label": "BITD.SkillsTinker",
+              "value": 0,
+              "max": 4
+            },
+            "attune": {
+              "label": "BITD.SkillsAttune",
+              "value": 0,
+              "max": 4
+            },
             "hunt": {
               "label": "BITD.SkillsHunt",
               "value": 0,
               "max": 4
             },
-            "study": {
-              "label": "BITD.SkillsStudy",
-              "value": 0,
-              "max": 4
-            },
             "survey": {
               "label": "BITD.SkillsSurvey",
-              "value": 0,
-              "max": 4
-            },
-            "tinker": {
-              "label": "BITD.SkillsTinker",
               "value": 0,
               "max": 4
             }
@@ -93,6 +93,11 @@
           "exp_max": 6,
           "label": "BITD.SkillsProwess",
           "skills": {
+            "skirmish": {
+              "label": "BITD.SkillsSkirmish",
+              "value": 0,
+              "max": 4
+            },
             "finesse": {
               "label": "BITD.SkillsFinesse",
               "value": 0,
@@ -100,11 +105,6 @@
             },
             "prowl": {
               "label": "BITD.SkillsProwl",
-              "value": 0,
-              "max": 4
-            },
-            "skirmish": {
-              "label": "BITD.SkillsSkirmish",
               "value": 0,
               "max": 4
             },
@@ -120,11 +120,6 @@
           "exp_max": 6,
           "label": "BITD.SkillsResolve",
           "skills": {
-            "attune": {
-              "label": "BITD.SkillsAttune",
-              "value": 0,
-              "max": 4
-            },
             "command": {
               "label": "BITD.SkillsCommand",
               "value": 0,
@@ -137,6 +132,11 @@
             },
             "sway": {
               "label": "BITD.SkillsSway",
+              "value": 0,
+              "max": 4
+            },
+            "study": {
+              "label": "BITD.SkillsStudy",
               "value": 0,
               "max": 4
             }
@@ -318,28 +318,32 @@
         "label": "BITD.Expert"
       }
     },
-    "gang_type": ["Adepts"],
+    "gang_type": ["Operatives"],
     "gang_type_list": {
 
-      "Adepts": {
-        "label": "BITD.GangTypeAdepts",
-        "description": "BITD.GangTypeAdeptsDescription"
+      "Operatives": {
+        "label": "RITS.GangTypeOperatives",
+        "description": "RITS.GangTypeOperativesDescription"
       },
-      "Rooks": {
-        "label": "BITD.GangTypeRooks",
-        "description": "BITD.GangTypeRooksDescription"
+      "Technicians": {
+        "label": "RITS.GangTypeTechnicians",
+        "description": "RITS.GangTypeTechniciansDescription"
       },
-      "Rovers": {
-        "label": "BITD.GangTypeRovers",
-        "description": "BITD.GangTypeRoversDescription"
-      },
-      "Skulks": {
-        "label": "BITD.GangTypeSkulks",
-        "description": "BITD.GangTypeSkulksDescription"
+      "Thieves": {
+        "label": "RITS.GangTypeThieves",
+        "description": "RITS.GangTypeThievesDescription"
       },
       "Thugs": {
-        "label": "BITD.GangTypeThugs",
-        "description": "BITD.GangTypeThugsDescription"
+        "label": "RITS.GangTypeThugs",
+        "description": "RITS.GangTypeThugsDescription"
+      },
+      "Transporters": {
+        "label": "RITS.GangTypeTransporters",
+        "description": "RITS.GangTypeTransportersDescription"
+      },
+      "Wierdos": {
+        "label": "RITS.GangTypeWierdos",
+        "description": "RITS.GangTypeWierdosDescription"
       }
     },
     "expert_type": "",
