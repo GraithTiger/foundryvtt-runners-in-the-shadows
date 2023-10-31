@@ -48,8 +48,8 @@ export class BladesActor extends Actor {
       for (var skill_name in this.system.attributes[attribute_name].skills) {
         dice_amount[skill_name] = parseInt(this.system.attributes[attribute_name].skills[skill_name]['value'][0])
 
-        // We add a +1d for every skill higher than 0.
-        if (dice_amount[skill_name] > 0) {
+        // We add a +1d for every mundane skill higher than 0.
+        if (dice_amount[skill_name] > 0 && !this.system.attributes[attribute_name].skills[skill_name]['supernatural']) {
           dice_amount[attribute_name]++;
         }
       }

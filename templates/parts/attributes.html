@@ -27,8 +27,8 @@
     {{!-- Skills --}}
 
     {{#each attribute.skills as |skill skill_name|}}
-
-    <div class="flex-horizontal">
+    {{#unless skill.hidden}}
+    <div class="flex-horizontal {{ifThen skill.supernatural 'supernatural' ''}}">
       <div class="attributes-container">
 
         {{#multiboxes skill.value}}
@@ -43,10 +43,32 @@
         {{/multiboxes}}
       </div>
     </div>
+    {{/unless}}
     {{/each}}
-
   </div>
   {{/each}}
+
+  <!-- <div id=character-{{_id}}-attributes-supernatural class="attribute skills-only">
+    {{#each system.skills_supernatural as |skill skill_name|}}
+    {{#unless skill.hidden}}
+    <div class="flex-horizontal">
+      <div class="attributes-container">
+
+        {{#multiboxes skill.value}}
+
+        {{#times_from_0 skill.max}}
+        <input type="radio" id="attributes-{{../../_id}}-{{skill_name}}-{{this}}"
+               name="system.attributes.skills_supernatural.{{skill_name}}.value" value="{{this}}">
+        <label for="attributes-{{../../_id}}-{{skill_name}}-{{this}}"></label>
+        {{/times_from_0}}
+
+        <div class="attribute-skill-label roll-die-attribute rollable-text" data-roll-attribute="{{skill_name}}">{{localize skill.label}}</div>
+        {{/multiboxes}}
+      </div>
+    </div>
+    {{/unless}}
+    {{/each}}
+  </div> -->
 
 
 </div>

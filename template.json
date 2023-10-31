@@ -30,8 +30,10 @@
     },
     "healing-clock": [0],
     "experience": [0],
-    "experience_max": 8,
+    "experience_max": 10,
     "experience_clues": ["BITD.ClassExpClue3", "BITD.ClassExpClue2"],
+    "awakened": false,
+    "emergent": false,
     "coins": [0],
     "coins_stashed": [0],
     "special_abilities": [],
@@ -71,8 +73,8 @@
               "value": 0,
               "max": 4
             },
-            "attune": {
-              "label": "BITD.SkillsAttune",
+            "interface": {
+              "label": "RITS.SkillsInterface",
               "value": 0,
               "max": 4
             },
@@ -139,9 +141,39 @@
               "label": "BITD.SkillsStudy",
               "value": 0,
               "max": 4
+            },
+            "assense": {
+              "label": "RITS.SkillsAssense",
+              "value": 0,
+              "max": 4,
+              "hidden": true,
+              "supernatural": true
+            },
+            "attune": {
+              "label": "BITD.SkillsAttune",
+              "value": 0,
+              "max": 4,
+              "hidden": true,
+              "supernatural": true
             }
           }
         }
+      },
+    "essence": {
+      "value": [0],
+      "max": 8,
+      "max_default": 8,
+      "label": "RITS.Essence",
+      "implants": {
+        "sensory": {},
+        "neural": {},
+        "arms": {},
+        "vitals": {},
+        "compartment": {},
+        "legs": {},
+        "skin": {},
+        "skeleton": {}
+      }
     }
   },
   "crew": {
