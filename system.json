@@ -10,7 +10,7 @@
   "name": "runners-in-the-shadows",
   "minimumCoreVersion": "10",
   "url": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows",
-  "manifest": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows/master/system.json",
+  "manifest": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows/raw/master/system.json",
   "download": "https://github.com/GraithTiger/foundryvtt-runners-in-the-shadows/archive/refs/tags/4.8.0-test.2.zip",
   "authors": [
     { "name": "megastruktur" },
