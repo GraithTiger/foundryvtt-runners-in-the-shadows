@@ -1,3 +1,4 @@
 /.idea/*
 /runners-in-the-shadows.lock
 /.vscode
+/node-modules
