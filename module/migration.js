@@ -48,8 +48,8 @@ export const migrateWorld = async function() {
   }
 
   // Set the migration as complete
-  game.settings.set("bitd", "systemMigrationVersion", game.system.version);
-  ui.notifications.info(`BITD System Migration to version ${game.system.version} completed!`, {permanent: true});
+  game.settings.set("rits", "systemMigrationVersion", game.system.version);
+  ui.notifications.info(`RITS System Migration to version ${game.system.version} completed!`, {permanent: true});
 };
 
 
@@ -85,61 +85,93 @@ export const _migrateSceneData = function(scene) {
  */
 function _migrateActor(actor) {
 
+  const skillsMap = new Map([
+    ['intuition', 'insight'],
+    ['prowess', 'body'],
+    ['resolve', 'willpower'],
+    ['tinker', 'engineer'],
+    ['hunt', 'stalk'],
+    ['skirmish', 'fight'],
+    ['sway', 'influence']
+  ]);
+
   let updateData = {}
-
-  // Migrate Skills
+  const _actor = actor._source;
+  // Migrate Attribute & Skill names
   const attributes = game.system.model.Actor.character.attributes;
-  for ( let attribute_name of Object.keys(actor.system.attributes || {}) ) {
-
-    // Insert attribute label
-    if (typeof actor.system.attributes[attribute_name].label === 'undefined') {
-      updateData[`system.attributes.${attribute_name}.label`] = attributes[attribute_name].label;
+  updateData['system'] = {"attributes": {}};
+  for ( let attribute_name of Object.keys(_actor.system.attributes || {}) ) {
+    let newAttrName;
+    switch (attribute_name) {
+      case "insight":
+        newAttrName = "intuition";
+        break;
+      case "prowess":
+        newAttrName = "body";
+        break;
+      case "resolve":
+        newAttrName = "willpower";
+        break;
     }
-    for ( let skill_name of Object.keys(actor.system.attributes[attribute_name]['skills']) ) {
 
-      // Insert skill label
-      // Copy Skill value
-      if (typeof actor.system.attributes[attribute_name].skills[skill_name].label === 'undefined') {
+    if (typeof newAttrName === "string"){
+      updateData.system.attributes[newAttrName] = _actor.system.attributes[attribute_name];
+      updateData.system.attributes[newAttrName].label = attributes[newAttrName].label;
+      updateData.system.attributes[`-=${attribute_name}`] = null;
+    }
+    let skills = {};
+    for ( let skill_name of Object.keys(_actor.system.attributes[attribute_name]['skills']) ) {
+      let newSkillName;
+      switch (skill_name) {
+        case "tinker":
+          newSkillName = "engineer";
+          break;
+        case "hunt":
+          newSkillName = "stalk";
+          break;
+        case "skirmish":
+          newSkillName = "fight";
+          break;
+        case "sway":
+          newSkillName = "influence";
+          break;
+      }
 
-        // Create Label.
-        updateData[`system.attributes.${attribute_name}.skills.${skill_name}.label`] = attributes[attribute_name].skills[skill_name].label;
-        // Migrate from skillname = [0]
-        let skill_tmp = actor.system.attributes[attribute_name].skills[skill_name];
-        if (Array.isArray(skill_tmp)) {
-          updateData[`system.attributes.${attribute_name}.skills.${skill_name}.value`] = [skill_tmp[0]];
-        }
-
+      if (typeof newSkillName === "string"){
+        skills[newSkillName] = _actor.system.attributes[attribute_name].skills[skill_name];
+        skills[newSkillName].label = attributes[(typeof newAttrName === "string")? newAttrName : attribute_name].skills[newSkillName].label;
+        skills[`-=${skill_name}`] = null;
+      }
+      else {
+        skills[skill_name] = _actor.system.attributes[attribute_name].skills[skill_name];
+        skills[skill_name].label = attributes[(typeof newAttrName === "string")? newAttrName : attribute_name].skills[skill_name].label;
       }
     }
+    if (typeof newAttrName === "string"){
+      updateData.system.attributes[newAttrName].skills = undefined;
+      updateData.system.attributes[newAttrName].skills = skills;
+    }
+    else {
+      updateData.system.attributes[attribute_name] = {"skills": skills};
+    }
   }
-
-  // Migrate Stress to Array
-  if (typeof actor.system.stress[0] !== 'undefined') {
-    updateData[`system.stress.value`] = actor.system.stress;
-    updateData[`system.stress.max`] = 9;
-    updateData[`system.stress.max_default`] = 9;
-    updateData[`system.stress.name_default`] = "BITD.Stress";
-    updateData[`system.stress.name`] = "BITD.Stress";
-  }
-
-  // Migrate Trauma to Array
-  if (typeof actor.system.trauma === 'undefined') {
-    updateData[`system.trauma.list`] = actor.system.traumas;
-    updateData[`system.trauma.value`] = [actor.system.traumas.length];
-    updateData[`system.trauma.max`] = 4;
-    updateData[`system.trauma.max_default`] = 4;
-    updateData[`system.trauma.name_default`] = "BITD.Trauma";
-    updateData[`system.trauma.name`] = "BITD.Trauma";
+  
+  //Update Effects
+  updateData['effects'] = [];
+  for (let effect of _actor.effects) {
+    let changes = [];
+    for (let change of effect.changes) {
+      let key = change.key;
+      for (let name of skillsMap.keys()){
+        key = key.replaceAll(name, skillsMap.get(name));
+      }
+      changes.push({"key": key, "mode": change.mode, "value": change.value});
+    }
+    updateData.effects.push({"_id": effect._id, "changes": changes});
   }
 
   return updateData;
-
-  // for ( let k of Object.keys(actor.system.attributes || {}) ) {
-  //   if ( k in b ) updateData[`system.bonuses.${k}`] = b[k];
-  //   else updateData[`system.bonuses.-=${k}`] = null;
-  // }
 }
-
 /* -------------------------------------------- */
 
 
