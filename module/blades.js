@@ -283,9 +283,9 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required
   const currentVersion = game.settings.get("rits", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = "4.8.0";
+  const NEEDS_MIGRATION_VERSION = "4.8.1";
 
-  let needMigration = (compare(currentVersion, NEEDS_MIGRATION_VERSION, '>') || (currentVersion === null));
+  let needMigration = (compare(currentVersion, NEEDS_MIGRATION_VERSION, '<') || (currentVersion === null));
 
   // Perform the migration
   if ( needMigration && game.user.isGM ) {
