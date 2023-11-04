@@ -21,6 +21,7 @@ import { BladesFactionSheet } from "./blades-faction-sheet.js";
 import * as migrations from "./migration.js";
 
 window.BladesHelpers = BladesHelpers;
+const { compareVersions, compare, satisfies, validate } = window.compareVersions;
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -258,13 +259,13 @@ Hooks.once("init", async function() {
     html += `<label class="clock-zero-label" for="clock-0-${uniq_id}}"><i class="fab fa-creative-commons-zero nullifier"></i></label>`;
     html += `<div id="blades-clock-${uniq_id}" class="blades-clock clock-${type} clock-${type}-${current_value}" style="background-image:url('systems/runners-in-the-shadows/styles/assets/progressclocks-svg/Progress Clock ${type}-${current_value}.svg');">`;
 
-    let zero_checked = (parseInt(current_value) === 0) ? 'checked' : '';
-    html += `<input type="radio" value="0" id="clock-0-${uniq_id}}" data-dType="String" name="${parameter_name}" ${zero_checked}>`;
+    let zero_checked = (current_value === 0) ? 'checked' : '';
+    html += `<input type="radio" value="0" id="clock-0-${uniq_id}}" data-dType="Number" name="${parameter_name}" ${zero_checked}>`;
 
-    for (let i = 1; i <= parseInt(type); i++) {
-      let checked = (parseInt(current_value) === i) ? 'checked' : '';
+    for (let i = 1; i <= type; i++) {
+      let checked = (current_value === i) ? 'checked' : '';
       html += `
-        <input type="radio" value="${i}" id="clock-${i}-${uniq_id}" data-dType="String" name="${parameter_name}" ${checked}>
+        <input type="radio" value="${i}" id="clock-${i}-${uniq_id}" data-dType="Number" name="${parameter_name}" ${checked}>
         <label for="clock-${i}-${uniq_id}"></label>
       `;
     }
@@ -282,9 +283,9 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required
   const currentVersion = game.settings.get("rits", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = 2.15;
+  const NEEDS_MIGRATION_VERSION = "4.8.0";
 
-  let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null) ;
+  let needMigration = (compare(currentVersion, NEEDS_MIGRATION_VERSION, '>') || (currentVersion === null));
 
   // Perform the migration
   if ( needMigration && game.user.isGM ) {

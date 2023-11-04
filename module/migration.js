@@ -86,7 +86,7 @@ export const _migrateSceneData = function(scene) {
 function _migrateActor(actor) {
 
   const skillsMap = new Map([
-    ['intuition', 'insight'],
+    ['insight', 'intuition'],
     ['prowess', 'body'],
     ['resolve', 'willpower'],
     ['tinker', 'engineer'],
@@ -101,18 +101,18 @@ function _migrateActor(actor) {
   const attributes = game.system.model.Actor.character.attributes;
   updateData['system'] = {"attributes": {}};
   for ( let attribute_name of Object.keys(_actor.system.attributes || {}) ) {
-    let newAttrName;
-    switch (attribute_name) {
-      case "insight":
-        newAttrName = "intuition";
-        break;
-      case "prowess":
-        newAttrName = "body";
-        break;
-      case "resolve":
-        newAttrName = "willpower";
-        break;
-    }
+    let newAttrName = skillsMap.get(attribute_name);;
+    // switch (attribute_name) {
+    //   case "insight":
+    //     newAttrName = "intuition";
+    //     break;
+    //   case "prowess":
+    //     newAttrName = "body";
+    //     break;
+    //   case "resolve":
+    //     newAttrName = "willpower";
+    //     break;
+    // }
 
     if (typeof newAttrName === "string"){
       updateData.system.attributes[newAttrName] = _actor.system.attributes[attribute_name];
@@ -121,30 +121,37 @@ function _migrateActor(actor) {
     }
     let skills = {};
     for ( let skill_name of Object.keys(_actor.system.attributes[attribute_name]['skills']) ) {
-      let newSkillName;
-      switch (skill_name) {
-        case "tinker":
-          newSkillName = "engineer";
-          break;
-        case "hunt":
-          newSkillName = "stalk";
-          break;
-        case "skirmish":
-          newSkillName = "fight";
-          break;
-        case "sway":
-          newSkillName = "influence";
-          break;
+      let newSkillName = skillsMap.get(skill_name);
+      // switch (skill_name) {
+      //   case "tinker":
+      //     newSkillName = "engineer";
+      //     break;
+      //   case "hunt":
+      //     newSkillName = "stalk";
+      //     break;
+      //   case "skirmish":
+      //     newSkillName = "fight";
+      //     break;
+      //   case "sway":
+      //     newSkillName = "influence";
+      //     break;
+      // }
+
+      let value = _actor.system.attributes[attribute_name].skills[skill_name].value;
+      if (typeof value !== 'number'){
+        value = parseInt(value)
       }
 
       if (typeof newSkillName === "string"){
         skills[newSkillName] = _actor.system.attributes[attribute_name].skills[skill_name];
         skills[newSkillName].label = attributes[(typeof newAttrName === "string")? newAttrName : attribute_name].skills[newSkillName].label;
+        skills[newSkillName].value = value;
         skills[`-=${skill_name}`] = null;
       }
       else {
         skills[skill_name] = _actor.system.attributes[attribute_name].skills[skill_name];
         skills[skill_name].label = attributes[(typeof newAttrName === "string")? newAttrName : attribute_name].skills[skill_name].label;
+        skills[skill_name].value = value;
       }
     }
     if (typeof newAttrName === "string"){
@@ -168,6 +175,11 @@ function _migrateActor(actor) {
       changes.push({"key": key, "mode": change.mode, "value": change.value});
     }
     updateData.effects.push({"_id": effect._id, "changes": changes});
+  }
+
+  //Update Healing Clock to number
+  if (typeof _actor.system['healing-clock'] !== "number"){
+    updateData.system["healing-clock"] = parseInt(_actor.system['healing-clock']);
   }
 
   return updateData;

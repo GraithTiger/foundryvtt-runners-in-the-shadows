@@ -28,7 +28,7 @@
       "options": ["cold", "haunted", "obsessed", "paranoid", "reckless", "soft", "unstable", "vicious"],
       "list": []
     },
-    "healing-clock": [0],
+    "healing-clock": 0,
     "experience": [0],
     "experience_max": 10,
     "experience_clues": ["BITD.ClassExpClue3", "BITD.ClassExpClue2"],
@@ -199,7 +199,7 @@
   "\uD83D\uDD5B clock": {
     "name": "",
     "type": 4,
-    "value": "0",
+    "value": 0,
     "owner": ""
   },
     "factions": {
@@ -309,18 +309,20 @@
     "templates": ["default", "logic", "activatedEffect"],
     "experience_clues": [],
     "base_skills": {
-      "hunt": [0],
-      "study": [0],
+      "engineer": [0],
+      "interface": [0],
+      "stalk": [0],
       "survey": [0],
-      "tinker": [0],
+      "fight": [0],
       "finesse": [0],
       "prowl": [0],
-      "skirmish": [0],
       "wreck": [0],
-      "attune": [0],
       "command": [0],
       "consort": [0],
-      "sway": [0]
+      "influence": [0],
+      "study": [0],
+      "assense": [0],
+      "attune": [0]
     }
   },
   "ability": {

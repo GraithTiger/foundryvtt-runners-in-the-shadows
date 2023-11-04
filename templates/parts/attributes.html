@@ -35,7 +35,7 @@
 
         {{#times_from_0 skill.max}}
         <input type="radio" id="attributes-{{../../../_id}}-{{skill_name}}-{{this}}"
-               name="system.attributes.{{attribute_name}}.skills.{{skill_name}}.value" value="{{this}}">
+               name="system.attributes.{{attribute_name}}.skills.{{skill_name}}.value" data-dtype="Number" value="{{this}}">
         <label for="attributes-{{../../../_id}}-{{skill_name}}-{{this}}"></label>
         {{/times_from_0}}
 
